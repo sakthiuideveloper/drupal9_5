@@ -1,0 +1,82 @@
+<?php
+
+namespace Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }};
+
+/**
+ * Class {{ camel_prefix }}PluginWrapper.
+ *
+ * @package Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}
+ */
+
+abstract class Abstract{{ camel_prefix }} implements {{ camel_prefix }}Interface {
+
+  /**
+   * THe plugin id.
+   *
+   * @var string
+   */
+  protected $pluginId;
+
+  /**
+   * The label.
+   *
+   * @var string
+   */
+  protected $label;
+
+{% if has_weight %}
+  /**
+   * The weight.
+   *
+   * @var int
+   */
+  protected $weight;
+{% endif %}
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLabel(): string {
+    return $this->label;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLabel(string $newLabel): {{ camel_prefix }}Interface {
+    $this->label = $newLabel;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getId(): string {
+    return $this->pluginId;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setId(string $newId): {{ camel_prefix }}Interface {
+    $this->pluginId = $newId;
+    return $this;
+  }
+
+{% if has_weight %}
+  /**
+   * {@inheritdoc}
+   */
+  public function getWeight(): int {
+    return $this->weight;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setWeight(int $newWeight): {{ camel_prefix }}Interface {
+    $this->pluginId = $newWeight;
+    return $this;
+  }
+{% endif %}
+}

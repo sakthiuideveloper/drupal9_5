@@ -1,0 +1,23 @@
+{
+    "name": "drupal/ts_dx",
+    "description": "Provides DX tools.",
+    "type": "drupal-module",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "tsecher",
+            "email": "me@thomas-secher.fr"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^10"
+            }
+        }
+    }
+}

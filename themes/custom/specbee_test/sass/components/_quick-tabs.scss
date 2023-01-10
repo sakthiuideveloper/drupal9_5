@@ -1,0 +1,103 @@
+ul.quicktabs-tabs {
+	padding-left: 0;
+	border-bottom: 0.15625rem solid var(--bright-navy-blue);
+	margin-bottom: 2.1875rem;
+	@extend .flex;
+	@extend .space-around;
+	li {
+		@extend .dmlr;
+		@extend .ptb;
+		@extend .relative;
+		width: 33%;
+		white-space: normal;
+		line-height: normal;
+		text-align: center;
+		a {
+			font-size: var(--font-size);
+			text-decoration: none;
+			@include transition-property(all);
+			@include transition-timing-function(linear);
+			@include transition-duration(0.3s);
+			&:hover {
+				color: var(--black);
+			}
+		}
+		&.active {
+			a {
+				font-size: var(--font-size);
+				color: var(--black);
+				font-weight: var(--font-weight-blod);
+			}
+			&::before {
+				@extend .absolute;
+				content: '\f107';
+				font: normal normal normal 42px/1 FontAwesome;
+				bottom: -1.6875rem;
+				color: var(--bright-navy-blue);
+				left: 50%;
+				z-index: 2;
+				margin-left: -1.25rem;
+				transform: scale3d(0.9, 0.9, 0.9);
+			}
+			&::after {
+				@extend .absolute;
+				content: '';
+				width: 1.0625rem;
+				height: 0.25rem;
+				background: var(--white);
+				bottom: -0.1875rem;
+				left: 50%;
+				z-index: 1;
+				margin-left: -0.9375rem;
+			}
+		}
+	}
+}
+
+.slick-dots {
+	list-style: none;
+	justify-content: center;
+	@extend .flex;
+	@extend .dmt;
+	@extend .dmb;
+	li {
+		margin: 0.1875rem 0.3125rem;
+		button {
+			width: 1.25rem;
+			height: 1.25rem;
+			@include border-radius(3.125rem);
+			font-size: 0;
+			@include box-shadow(none);
+			border: 0.125rem solid var(--bright-navy-blue);
+			background: transparent;
+		}
+		&.slick-active {
+			button {
+				background: var(--bright-navy-blue);
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 64em) {
+	.slick-dots {
+		display: none !important;
+	}
+	ul.quicktabs-tabs {
+		li {
+			padding-left: 3.125rem;
+			padding-right: 3.125rem;
+			width: auto;
+			white-space: nowrap;
+			text-align: inherit;
+			a {
+				font-size: var(--font-size-l);
+			}
+			&.active {
+				a {
+					font-size: var(--font-size-xxl);
+				}
+			}
+		}
+	}
+}

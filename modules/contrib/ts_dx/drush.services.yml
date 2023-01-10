@@ -1,0 +1,12 @@
+services:
+  ts_dx.commands:
+    class: \Drupal\ts_dx\Commands\DxCommands
+    tags:
+      - { name: drush.command }
+    arguments: ['@entity_type.manager']
+
+  ts_dx.plugin_manager_generator:
+    class: Drupal\ts_dx\Generators\PluginManagerGenerator
+    arguments: ['@module_handler', '@app.root']
+    tags:
+      - { name: drush.generator }

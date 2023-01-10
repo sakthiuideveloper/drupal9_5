@@ -1,0 +1,35 @@
+<?php
+
+namespace Drupal\{{ '{{ machine_name }}' }}\Plugin\{{ machine_name }}\{{ camel_prefix }};
+
+use Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface;
+use Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\Abstract{{ camel_prefix }};
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Plugin implementation For the type processor.
+ *
+ * @{{ camel_prefix }}Annotation(
+ *   id = "{{ '{{ plugin_id }}' }}",
+ *   label = "{{ '{{ plugin_name }}' }}",
+{% if has_weight %}
+ *   weight = {{ '{{ plugin_weight }}' }},
+{% endif %}
+ * )
+ */
+class {{ '{{ plugin_class }}' }}{{ camel_prefix}} extends Abstract{{ camel_prefix }} implements {{ camel_prefix }}Interface {
+
+  /**
+   * {{ '{{ plugin_class }}' }} constructor.
+   */
+  public function __construct() {
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): {{ camel_prefix }}Interface {
+    return new static();
+  }
+
+}

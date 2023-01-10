@@ -1,0 +1,20 @@
+ts_dx.node_edit:
+  path: '/admin/node/edit'
+  defaults:
+    _controller: '\Drupal\ts_dx\Controller\ToolbarRedirectController::nodeEditFormRedirect'
+  requirements:
+    _permission: 'access content overview'
+
+ts_dx.term_edit:
+  path: '/admin/term/edit'
+  defaults:
+    _controller: '\Drupal\ts_dx\Controller\ToolbarRedirectController::termEditFormRedirect'
+  requirements:
+    _permission: 'access content overview'
+
+ts_dx.entity_edit:
+  path: '/admin/{entity_type}/edit'
+  defaults:
+    _controller: '\Drupal\ts_dx\Controller\ToolbarRedirectController::entityEditFormRedirect'
+  requirements:
+    _permission: 'access content overview'

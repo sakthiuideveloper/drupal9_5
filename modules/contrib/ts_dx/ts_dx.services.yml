@@ -1,0 +1,21 @@
+services:
+  ts_dx.menu_tools:
+    class: Drupal\ts_dx\Services\Tree\MenuTools
+    arguments: ['@menu.link_tree']
+
+  ts_dx.theme_tools:
+    class: Drupal\ts_dx\Services\Theme\ThemeTools
+    arguments: ["@router.admin_context", "@current_route_match"]
+
+  ts_dx.context_tools:
+    class: Drupal\ts_dx\Services\Context\ContextTools
+    arguments: ["@current_route_match", "@entity.repository"]
+
+  ts_dx.misc_tools:
+    class: Drupal\ts_dx\Services\MiscTools
+
+  ts_dx.twig_extension:
+    class: Drupal\ts_dx\Services\Theme\TwigExtension
+    arguments: ["@theme.manager"]
+    tags:
+      - { name: twig.extension }

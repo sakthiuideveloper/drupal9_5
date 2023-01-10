@@ -1,0 +1,11 @@
+name: TS DX
+type: module
+description: Provides tools to increase Developer Experience
+package: Development
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10
+
+# Information added by Drupal.org packaging script on 2022-02-24
+version: '1.0.0-rc6'
+project: 'ts_dx'
+datestamp: 1645717612

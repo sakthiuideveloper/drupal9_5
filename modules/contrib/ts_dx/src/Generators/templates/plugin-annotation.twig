@@ -1,0 +1,37 @@
+<?php
+
+namespace Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }};
+
+use Drupal\Component\Annotation\Plugin;
+
+/**
+ * Define a {{ camel_prefix }} annotation object.
+ *
+ * @Annotation
+ *
+ * @ingroup {{ slug_prefix }}
+ */
+class {{ camel_prefix }}Annotation extends Plugin {
+
+  /**
+   * The plugin ID.
+   *
+   * @var string
+   */
+  public $id;
+
+  /**
+   * The process label.
+   *
+   * @var string
+   */
+  public $label;
+
+  /**
+   * The process weight.
+   *
+   * @var int
+   */
+  public $weight;
+
+}

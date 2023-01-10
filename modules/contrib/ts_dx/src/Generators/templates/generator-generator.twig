@@ -1,0 +1,112 @@
+<?php
+
+namespace Drupal\{{ machine_name }}\Generators\{{ camel_prefix }};
+
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use DrupalCodeGenerator\Command\BaseGenerator;
+use DrupalCodeGenerator\Utils;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * Class {{ camel_prefix }}PluginGenerator.
+ *
+ * @package Drupal\{{ machine_name }}\Generators
+ */
+class {{ camel_prefix }}PluginGenerator extends BaseGenerator {
+
+  /**
+   * The command name.
+   *
+   * @var string
+   */
+  protected $name = '{{ human_slug_prefix }}-plugin';
+
+  /**
+   * The description.
+   *
+   * @var string
+   */
+  protected $description = 'Generates a {{ prefix }} plugin.';
+
+  /**
+   * The alias.
+   *
+   * @var string
+   */
+  protected $alias = '{{ human_slug_prefix }}';
+
+  /**
+   * The template dir path.
+   *
+   * @var string
+   */
+  protected $templatePath = __DIR__;
+
+  /**
+   * Module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
+   * {{ camel_prefix }}PluginGenerator constructor.
+   *
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   The module handler.
+   * @param string $name
+   *   Then name.
+   */
+  public function __construct(ModuleHandlerInterface $moduleHandler = NULL, $name = NULL) {
+    parent::__construct($name);
+    $this->moduleHandler = $moduleHandler;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function interact(InputInterface $input, OutputInterface $output) {
+    $questions = [];
+    $questions['machine_name'] = new Question('Module machine name');
+    $questions['machine_name']->setValidator([
+      Utils::class,
+      'validateMachineName',
+    ]);
+
+    // Plugin name.
+    $questions['plugin_name'] = new Question('Plugin Name');
+    $questions['plugin_name']->setValidator([Utils::class, 'validateRequired']);
+
+    // Plugin id.
+    $plugin_id = function ($vars) {
+      return Utils::camel2machine($vars['plugin_name']);
+    };
+    $questions['plugin_id'] = new Question('Plugin Id', $plugin_id);
+
+{% if has_weight %}
+    // Plugin weight.
+    $questions['plugin_weight'] = new Question('Plugin weight', 30);
+{% endif %}
+    $this->collectVars($input, $output, $questions);
+
+    // Init variables variantes.
+    $this->vars['plugin_id'] = Utils::human2machine($this->vars['plugin_id']);
+    $this->vars['plugin_class'] = Utils::camelize($this->vars['plugin_id']);
+
+    // Generateplugin.
+    $this->generatePlugin();
+  }
+
+  /**
+   * Generate plugin.
+   */
+  protected function generatePlugin() {
+    // Création du plugin.
+    $this->addFile()
+      ->path('src/Plugin/{{ machine_name }}/{{ camel_prefix }}/' . $this->vars['plugin_class'] . '{{ camel_prefix }}.php')
+      ->template('templates/plugin.twig');
+  }
+
+}

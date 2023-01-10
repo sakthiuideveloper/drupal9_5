@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Contains env_libraries.module..
+ */
+
+use Drupal\env_libraries\Services\LibraryManager;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+/**
+ * Implements hook_css_alter().
+ *
+ * Initialise les libraries cs.
+ */
+function env_libraries_css_alter(&$css, AttachedAssetsInterface $assets) {
+  \Drupal::service(LibraryManager::SERVICE_NAME)->initLibraries($css);
+}
+
+/**
+ * Implements hook_js_alter().
+ *
+ * Initialise les libraries js.
+ */
+function env_libraries_js_alter(&$javascript, AttachedAssetsInterface $assets) {
+  \Drupal::service(LibraryManager::SERVICE_NAME)->initLibraries($javascript);
+}

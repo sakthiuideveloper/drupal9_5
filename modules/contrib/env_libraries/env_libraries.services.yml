@@ -1,0 +1,9 @@
+services:
+  env_libraries.library_manager:
+    class: Drupal\env_libraries\Services\LibraryManager
+
+  env_libraries.twig_extension:
+    class: Drupal\env_libraries\Twig\EnvLibrariesTwigExtension
+    arguments: ['@env_libraries.library_manager']
+    tags:
+      - { name: twig.extension }

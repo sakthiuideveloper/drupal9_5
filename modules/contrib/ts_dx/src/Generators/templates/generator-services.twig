@@ -1,0 +1,6 @@
+
+  {{ machine_name }}.{{ slug_prefix }}_plugin_generator:
+    class: Drupal\{{ machine_name }}\Generators\{{ camel_prefix }}\{{ camel_prefix }}PluginGenerator
+    arguments: ['@module_handler']
+    tags:
+    - { name: drush.generator }

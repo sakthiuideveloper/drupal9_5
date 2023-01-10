@@ -1,0 +1,9 @@
+name: Env libraries
+type: module
+core_version_requirement: ^8.8 || ^9
+package: Development
+
+# Information added by Drupal.org packaging script on 2022-05-11
+version: '1.1.0'
+project: 'env_libraries'
+datestamp: 1652258444

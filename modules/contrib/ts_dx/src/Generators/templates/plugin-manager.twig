@@ -1,0 +1,137 @@
+<?php
+
+namespace Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }};
+
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Plugin\DefaultPluginManager;
+
+/**
+ * Class {{ camel_prefix }}PluginManager.
+ *
+ * @package Drupal\{{ machine_name }}\PluginManager
+ */
+class {{ camel_prefix }}PluginManager extends DefaultPluginManager {
+
+  /**
+   * Package Name.
+   *
+   * @const string
+   */
+  const PACKAGE_NAME = '{{ machine_name }}/{{ camel_prefix }}';
+
+  /**
+   * Service name.
+   *
+   * @const string
+   */
+  const SERVICE_NAME = '{{ machine_name }}.{{ slug_prefix }}_plugin_manager';
+
+  /**
+   * List of available plugin.
+   *
+   * @var \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\Abstract{{ camel_prefix }}[]
+   */
+  protected $plugins;
+
+  /**
+   * Singleton.
+   *
+   * @return static
+   *   The singleton.
+   */
+  public static function me() {
+    return \Drupal::service(static::SERVICE_NAME);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+    parent::__construct(
+      'Plugin/' . self::PACKAGE_NAME,
+      $namespaces,
+      $module_handler,
+      {{ camel_prefix }}Interface::class,
+      {{ camel_prefix }}Annotation::class);
+
+    $hookName = '{{ slug_prefix }}_service_info';
+    $this->alterInfo($hookName);
+    $this->setCacheBackend($cache_backend, $hookName);
+
+    $this->cacheTags[] = self::PACKAGE_NAME;
+  }
+
+  /**
+   * Return all available plugins.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}PluginWrapper[]
+   *   The list of plugins.
+   */
+  public function getAllPlugins(): array {
+    if (is_null($this->plugins)) {
+      $this->plugins = [];
+      foreach ($this->getDefinitions() as $definition) {
+        $this->plugins[$definition['id']] = static::createPluginInstance($definition['id'], $definition);
+      }
+
+      $this->sortPlugins();
+    }
+
+    return $this->plugins;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static function createPluginInstance($plugin_id, array $configuration = []) {
+    /** @var \Drupal\bim_gdpr\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface $plugin */
+    $plugin = call_user_func($configuration['class'] . '::create', \Drupal::getContainer());
+    $plugin->setId($plugin_id);
+    $plugin->setLabel($configuration['label']);
+{% if has_weight %}
+    $plugin->setWeight($configuration['weight']);
+{% endif %}
+    return $plugin;
+  }
+
+  /**
+   * Return the plugin.
+   *
+   * @param string $id
+   *   The plugin id.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface|null
+   *   The plugin.
+   */
+  public function getPluginById($id) {
+    if (is_null($this->plugins)) {
+      $this->getAllPlugins();
+    }
+
+    return isset($this->plugins[$id]) ? $this->plugins[$id] : NULL;
+  }
+
+  /**
+   * Sort plugins.
+   **/
+  protected function sortPlugins(){
+    uasort($this->plugins, function ({{ camel_prefix }}Interface $a, {{ camel_prefix }}Interface $b) {
+    {% if has_weight %}
+      $a = $a->getWeight();
+      $b = $b->getWeight();
+      if ($a > $b) {
+        return 1;
+      }
+      elseif ($a < $b) {
+        return -1;
+      }
+
+      return 0;
+    {% else %}
+      return strcmp($a->getLabel(), $b->getLabel());
+    {% endif %}
+    });
+  }
+
+}

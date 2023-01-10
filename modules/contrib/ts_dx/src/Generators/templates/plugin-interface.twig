@@ -1,0 +1,83 @@
+<?php
+
+namespace Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }};
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Interface {{ camel_prefix }}Interface.
+ *
+ * @package Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}
+ */
+interface {{ camel_prefix }}Interface {
+
+  /**
+   * Return the plugin label.
+   *
+   * @return string
+   *   The label.
+   */
+  public function getLabel(): string;
+
+  /**
+   * Set the label.
+   *
+   * @param string $newLabel
+   *   The new label.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface
+   *   The {{ prefixe }}.
+   */
+  public function setLabel(string $newLabel): {{ camel_prefix }}Interface;
+
+  /**
+   * Return the plugin id.
+   *
+   * @return string
+   *   The plugin id.
+   */
+  public function getId(): string;
+
+  /**
+   * Set the plugin id.
+   *
+   * @param string $newId
+   *   The new plugin id.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface
+   *   The {{ prefixe }}.
+   */
+  public function setId(string $newId): {{ camel_prefix }}Interface;
+
+{% if has_weight %}
+  /**
+   * Return the plugin weight.
+   *
+   * @return int
+   *   The plugin weight.
+   */
+  public function getWeight(): int;
+
+  /**
+   * Set the plugin weight.
+   *
+   * @param int $newWeight
+   *   The new plugin weight.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface
+   *   The {{ prefixe }}.
+   */
+  public function setWeight(int $newWeight): {{ camel_prefix }}Interface;
+{% endif %}
+  /**
+   * Create the {{ prefix }}.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
+   *
+   * @return \Drupal\{{ machine_name }}\PluginManager\{{ camel_prefix }}\{{ camel_prefix }}Interface
+   *   The {{ prefix }}.
+   */
+  public static function create(ContainerInterface $container): {{ camel_prefix }}Interface;
+
+}
